@@ -1658,22 +1658,22 @@ HRESULT Mesh::ExportToCMO(const wchar_t* szFileName, size_t nMaterials, const Ma
             return hr;
 
         size_t startIndex = 0;
-        for (auto it = subsets.cbegin(); it != subsets.end(); ++it)
+        for (const auto& it : subsets)
         {
             SubMesh smesh;
-            smesh.MaterialIndex = mAttributes[it->first];
+            smesh.MaterialIndex = mAttributes[it.first];
             if (smesh.MaterialIndex >= nMaterials)
                 smesh.MaterialIndex = 0;
 
             smesh.IndexBufferIndex = 0;
             smesh.VertexBufferIndex = 0;
             smesh.StartIndex = static_cast<UINT>(startIndex);
-            smesh.PrimCount = static_cast<UINT>(it->second);
+            smesh.PrimCount = static_cast<UINT>(it.second);
             hr = write_file(hFile.get(), smesh);
             if (FAILED(hr))
                 return hr;
 
-            if ((startIndex + (it->second * 3)) > mnFaces * 3)
+            if ((startIndex + (it.second * 3)) > mnFaces * 3)
                 return E_FAIL;
 
             startIndex += static_cast<size_t>(uint64_t(smesh.PrimCount) * 3);
@@ -2088,10 +2088,10 @@ HRESULT Mesh::ExportToSDKMESH(const wchar_t* szFileName,
                 {
                     int result = WideCharToMultiByte(CP_UTF8, WC_NO_BEST_FIT_CHARS,
                         m0->texture.c_str(), -1,
-                        m2->AlbetoTexture, MAX_TEXTURE_NAME, nullptr, FALSE);
+                        m2->AlbedoTexture, MAX_TEXTURE_NAME, nullptr, FALSE);
                     if (!result)
                     {
-                        *m2->AlbetoTexture = 0;
+                        *m2->AlbedoTexture = 0;
                     }
                 }
 
@@ -2101,7 +2101,7 @@ HRESULT Mesh::ExportToSDKMESH(const wchar_t* szFileName,
                     char dir[MAX_PATH] = {};
                     char fname[_MAX_FNAME] = {};
                     char ext[_MAX_EXT] = {};
-                    _splitpath_s(m2->AlbetoTexture, drive, dir, fname, ext);
+                    _splitpath_s(m2->AlbedoTexture, drive, dir, fname, ext);
 
                     std::string basename = fname;
                     size_t pos = basename.find_last_of('_');
@@ -2273,18 +2273,18 @@ HRESULT Mesh::ExportToSDKMESH(const wchar_t* szFileName,
         auto subsets = ComputeSubsets(mAttributes.get(), mnFaces);
 
         UINT64 startIndex = 0;
-        for (auto it = subsets.cbegin(); it != subsets.cend(); ++it)
+        for (const auto& it : subsets)
         {
             subsetArray.push_back(static_cast<UINT>(submeshes.size()));
 
             SDKMESH_SUBSET s = {};
-            s.MaterialID = mAttributes[it->first];
+            s.MaterialID = mAttributes[it.first];
             if (s.MaterialID >= nMaterials)
                 s.MaterialID = 0;
 
             s.PrimitiveType = PT_TRIANGLE_LIST;
             s.IndexStart = startIndex;
-            s.IndexCount = uint64_t(it->second) * 3;
+            s.IndexCount = uint64_t(it.second) * 3;
             s.VertexCount = mnVerts;
             submeshes.push_back(s);
 

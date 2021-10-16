@@ -3,16 +3,18 @@
     <metadata minClientVersion="2.8.6">
         <id>directxmesh_desktop_win10</id>
         <version>0.0.0-SpecifyVersionOnCommandline</version>
-        <title>DirectXMesh Library (VS 2017/2019 Win32 for Windows 10)</title>
+        <title>DirectXMesh Library (VS 2017/2019 Win32 for Windows 10/11)</title>
         <authors>Microsoft</authors>
         <owners>microsoft,directxtk</owners>
         <summary>DirectXMesh geometry processing library</summary>
-        <description>This version is for Windows desktop applications using Visual Studio 2017 or Visual Studio 2019 and supports Windows 10 including both DirectX 11 and DirectX 12.
+        <description>This version is for Windows desktop applications using Visual Studio 2017 or Visual Studio 2019 and supports Windows 10 / Windows 11 including both DirectX 11 and DirectX 12.
 
 DirectXMesh, a shared source library for performing various geometry content processing operations including generating normals and tangent frames, triangle adjacency computations, vertex cache optimization, and meshlet generation.</description>
-        <releaseNotes>Matches the June 9, 2021 release on GitHub.</releaseNotes>
+        <releaseNotes>Matches the September 28, 2021 release on GitHub.</releaseNotes>
         <projectUrl>http://go.microsoft.com/fwlink/?LinkID=324981</projectUrl>
+        <repository type="git" url="https://github.com/microsoft/DirectXMesh" />
         <icon>images\icon.jpg</icon>
+        <readme>docs\README.md</readme>
         <license type="expression">MIT</license>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <copyright>&#169; Microsoft Corporation. All rights reserved.</copyright>
@@ -21,7 +23,7 @@ DirectXMesh, a shared source library for performing various geometry content pro
 
     <files>
 
-        <file target="docs" src="Readme.*" />
+        <file target="docs" src="*.md" />
 
         <file target="include" src="DirectXMesh\DirectXMesh.h" />
         <file target="include" src="DirectXMesh\DirectXMesh.inl" />
